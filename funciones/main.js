@@ -26,17 +26,12 @@ class PromptMenu {
     }
 }
 //funciones
-function verPedidoFinal() {
-    for (const el of pedidoFinal) {
-        pedidoFinal.push(el);
-        console.log(pedidoFinal);
-    }
-}
+
 function tiempoDeEspera() {
     let minutos = Math.max();
 }
 
-const pedidoFinal = [];
+
 
 function elegirGuarniciones(guarniciones) {
     let guarnicionesElegidas = [];
@@ -143,7 +138,7 @@ const empanadas = [
 ];
 
 const tarta = [
-    new Comida("Tarta de jamón y queso", 3, ingredientesTarta, [], [], 1400, 30),
+    new Comida("Tartas", 3, ingredientesTarta, [], [], 1400, 30),
 ];
 
 const milanesasaConGuarnicion = [
@@ -194,22 +189,25 @@ function salir() {
     alert("Gracias por visitarnos!");
 }
 
+
 const opcionesConfirmarPedido = [
     new PromptOpcion(" 0. Cancelar", salir),
     new PromptOpcion(" 1. Agregar comida", elegirCategoria),
-    new PromptOpcion(" 2. Quitar comida", null), //nuevas funciones------
+    new PromptOpcion(" 2. Quitar comida", quitarcomida), //nuevas funciones------
     new PromptOpcion(" 3. Ver pedido completo", null), //nuevas funciones------
     new PromptOpcion(" 4. Confirmar pedido", null), //nuevas funciones------  
 ];
+
 const promptConfirmarPedido = new PromptMenu("¿Que desea hacer ahora?", opcionesConfirmarPedido);
 
+let pedidoFinal = [];
 function elegirComida(categoriaElegida) {
     const comidas = categoriaElegida.comidas;
     const promptComidas = new PromptMenu("¿Qué comida va a elegir?", comidas);
     let indexComidaElegida = null
     let esComidaValida = false;
     while (!esComidaValida || !indexComidaElegida) {
-        indexComidaElegida = prompt(promptComidas.pregunta + ' ' + promptComidas.opciones.map((opcion, index) => (index + 1) + '. ' + opcion.nombre))
+        indexComidaElegida = prompt(promptComidas.pregunta + " " + promptComidas.opciones.map((opcion, index) => (index + 1) + '. ' + opcion.nombre))
         esComidaValida =
             !isNaN(Number(indexComidaElegida)) &&
             indexComidaElegida > 0 &&
@@ -254,6 +252,33 @@ function elegirComida(categoriaElegida) {
     opcionesConfirmarPedido[confirmacionElegida].accion();
 }
 
+
+function quitarcomida(){
+   
+    let eliminarPlato = null;
+    let platoValido = false;
+    while (!platoValido || eliminarPlato === null) {
+        eliminarPlato = prompt("¿Qué comida quiere quitar? " + pedidoFinal.map((itemPedido, index) => (index + 1) + ". " + itemPedido.nombre) + " 0. Confirmar");
+        platoValido = !isNaN(Number(eliminarPlato)) && eliminarPlato >= 0 && eliminarPlato <= pedidoFinal.length;
+        if (!platoValido) {
+            alert("Por favor, elija una opción válida.");
+        }
+    }
+    pedidoFinal.splice(eliminarPlato + 1, 1);
+    const seguirPedido = prompt(promptConfirmarPedido.pregunta + " " + promptConfirmarPedido.opciones.map((opcion) => opcion.nombre));
+    opcionesConfirmarPedido[confirmacionElegida].accion();
+    
+}
+
+function verPedidoFinal() {
+    let 
+
+}
+
+
+function  confirmarPedido(){
+
+}
 
 // --------PASO 2 - B  -------------
 function buscarCategoria() {
