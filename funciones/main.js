@@ -180,9 +180,10 @@ class Categoria {
 const cartaCompleta = [
     new Categoria("Sanguches", sanguches),
     new Categoria("Milanesa al plato con guarnición", milanesasaConGuarnicion),
-    new Categoria("A la plancha con guarnición", ),
-    new Categoria("Tortilla de papa", []),
-    new Categoria("Tartas", []),
+    new Categoria("A la plancha con guarnición", cortesALaPlancha),
+    new Categoria("Tortilla de papa", tortilla),
+    new Categoria("Tartas", tarta),
+    new Categoria("Menú del día", menuDelDia),
 ];
 
 function salir() {
@@ -193,9 +194,9 @@ function salir() {
 const opcionesConfirmarPedido = [
     new PromptOpcion(" 0. Cancelar", salir),
     new PromptOpcion(" 1. Agregar comida", elegirCategoria),
-    new PromptOpcion(" 2. Quitar comida", quitarcomida), //nuevas funciones------
-    new PromptOpcion(" 3. Ver pedido completo", null), //nuevas funciones------
-    new PromptOpcion(" 4. Confirmar pedido", null), //nuevas funciones------  
+    new PromptOpcion(" 2. Quitar comida", quitarComida), //nuevas funciones------
+    new PromptOpcion(" 3. Ver pedido completo", verPedidoFinal), //nuevas funciones------
+    new PromptOpcion(" 4. Confirmar pedido", confirmarPedido), //nuevas funciones------  
 ];
 
 const promptConfirmarPedido = new PromptMenu("¿Que desea hacer ahora?", opcionesConfirmarPedido);
@@ -253,30 +254,36 @@ function elegirComida(categoriaElegida) {
 }
 
 
-function quitarcomida(){
+function quitarComida(){
    
     let eliminarPlato = null;
     let platoValido = false;
     while (!platoValido || eliminarPlato === null) {
-        eliminarPlato = prompt("¿Qué comida quiere quitar? " + pedidoFinal.map((itemPedido, index) => (index + 1) + ". " + itemPedido.nombre) + " 0. Confirmar");
+        eliminarPlato = prompt("¿Qué comida quiere quitar? " + pedidoFinal.map((itemPedido, index) => (index + 1) + ". " + itemPedido.nombre));
         platoValido = !isNaN(Number(eliminarPlato)) && eliminarPlato >= 0 && eliminarPlato <= pedidoFinal.length;
         if (!platoValido) {
             alert("Por favor, elija una opción válida.");
         }
     }
-    pedidoFinal.splice(eliminarPlato + 1, 1);
-    const seguirPedido = prompt(promptConfirmarPedido.pregunta + " " + promptConfirmarPedido.opciones.map((opcion) => opcion.nombre));
-    opcionesConfirmarPedido[confirmacionElegida].accion();
-    
+    pedidoFinal.splice(eliminarPlato - 1, 1);
+    eliminarPlato = prompt("¿Quiere eliminar otro plato? " + pedidoFinal.map((itemPedido, index) => (index + 1) + ". " + itemPedido.nombre +"0. Continuar"));
+
+    const continuar = prompt(promptConfirmarPedido.pregunta + " " + promptConfirmarPedido.opciones.map((opcion) => opcion.nombre));
+    opcionesConfirmarPedido[continuar].accion();
 }
 
 function verPedidoFinal() {
-    let 
 
+    let verListaPedido = alert("Este es su pedido: " + pedidoFinal.map((itemPedido, index) => (index + 1) + ". "  + itemPedido.nombre  + " $" + itemPedido.precio));
+    
+    const continuar = prompt(promptConfirmarPedido.pregunta + " " + promptConfirmarPedido.opciones.map((opcion) => opcion.nombre));
+    opcionesConfirmarPedido[continuar].accion();
 }
 
 
-function  confirmarPedido(){
+function  confirmarPedido(precios){
+    const totalCosto = precios += pedidoFinal.precio;
+    let sumaTotal = prompt("El total de su compra es: " + pedidoFinal.precio() ) ;
 
 }
 
@@ -372,6 +379,5 @@ function elegirCategoria() {
 
 iniciar();
 
-let nombreComida = "";
 let total = 0;
 let tiempo = 0;
