@@ -275,7 +275,7 @@ function verPedidoFinal() {
     opcionesConfirmarPedido[continuar].accion();
 }
 
-
+//---------------FINAL-------------
 function  confirmarPedido(){
   
    let total = pedidoFinal.reduce((suma, itemPedido) => {
@@ -286,8 +286,7 @@ function  confirmarPedido(){
 
       console.log(pedidoFinal);
 }
-
-    
+//-----------------------------------------
 
 // --------PASO 2 - B  -------------
 function buscarCategoria() {
@@ -307,7 +306,7 @@ function buscarCategoria() {
     }
     elegirComida(categoriaEncontrada);
 }
-
+//-------------------------------------
 
 
 
