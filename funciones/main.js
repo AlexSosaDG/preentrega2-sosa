@@ -27,11 +27,6 @@ class PromptMenu {
 }
 //funciones
 
-function tiempoDeEspera() {
-    let minutos = Math.max();
-}
-
-
 
 function elegirGuarniciones(guarniciones) {
     let guarnicionesElegidas = [];
@@ -281,11 +276,18 @@ function verPedidoFinal() {
 }
 
 
-function  confirmarPedido(precios){
-    const totalCosto = precios += pedidoFinal.precio;
-    let sumaTotal = prompt("El total de su compra es: " + pedidoFinal.precio() ) ;
+function  confirmarPedido(){
+  
+   let total = pedidoFinal.reduce((suma, itemPedido) => {
+        return suma + itemPedido.precio;
+      }, 0);
 
+      const ticket = alert("Confirmar pedido:  " + pedidoFinal.map((itemPedido, index) => (index + 1) + ". "  + itemPedido.nombre  + " $" + itemPedido.precio + " "));
+
+      console.log(pedidoFinal);
 }
+
+    
 
 // --------PASO 2 - B  -------------
 function buscarCategoria() {
